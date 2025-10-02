@@ -1,5 +1,6 @@
 ﻿using KantarStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,10 @@ namespace KantarStore.Infrastructure.Persistance
         internal DbSet<BasketItem> BasketItems { get; set; }
 
         internal DbSet<Voucher> Vouchers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

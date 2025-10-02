@@ -4,6 +4,7 @@ using KantarStore.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KantarStore.Infrastructure.Migrations
 {
     [DbContext(typeof(KantarStoreDBContext))]
-    partial class KantarStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251002074654_AddBasketStatusField")]
+    partial class AddBasketStatusField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

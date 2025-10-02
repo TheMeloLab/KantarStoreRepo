@@ -14,6 +14,12 @@ namespace KantarStore.Domain.Entities
             
         }
 
+        public enum BasketStatus
+        {
+            Open = 1,
+            Closed = 2
+        }
+
         public Basket(Guid id, Guid userId): base()
         {
             if (id == Guid.Empty)
@@ -29,6 +35,7 @@ namespace KantarStore.Domain.Entities
         [Key]
         public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
+        public int Status { get; private set; }
 
         private readonly List<BasketItem> _items = new();
     }

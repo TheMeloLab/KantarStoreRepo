@@ -19,4 +19,8 @@
     <ProjectReference Include="..\KantarStore.Application\KantarStore.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

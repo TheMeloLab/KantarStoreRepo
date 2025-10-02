@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KantarStore.Infrastructure.Migrations
 {
     [DbContext(typeof(KantarStoreDBContext))]
-    [Migration("20250930153138_Init")]
+    [Migration("20251001142202_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -59,6 +59,8 @@ namespace KantarStore.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BasketId");
+
                     b.ToTable("BasketItems");
                 });
 
@@ -82,7 +84,12 @@ namespace KantarStore.Infrastructure.Migrations
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("VoucherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VoucherId");
 
                     b.ToTable("Products");
                 });
@@ -93,12 +100,66 @@ namespace KantarStore.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("voucherType")
+                    b.Property<Guid?>("MultiBuyOfferDiffentProduct_ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("MultiBuyOfferSameProduct_Quantity")
                         .HasColumnType("int");
+
+                    b.Property<int?>("MultiBuyPercentageDiscountDifferentProduct_Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("MultiBuyPercentageDiscountDifferentProduct_ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("MultiBuyPercentageDiscountDifferentProduct_Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MultiBuyPercentageDiscountSameProduct_Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MultiBuyPercentageDiscountSameProduct_Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PercentageDiscountOnDifferentProduct_Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PercentageDiscountOnDifferentProduct_ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("PercentageDiscountOnSameProduct")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VoucherConfig")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VoucherDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Vouchers");
+                });
+
+            modelBuilder.Entity("KantarStore.Domain.Entities.BasketItem", b =>
+                {
+                    b.HasOne("KantarStore.Domain.Entities.Basket", "Basket")
+                        .WithMany()
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+                });
+
+            modelBuilder.Entity("KantarStore.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("KantarStore.Domain.Entities.Voucher", "Voucher")
+                        .WithMany()
+                        .HasForeignKey("VoucherId");
+
+                    b.Navigation("Voucher");
                 });
 #pragma warning restore 612, 618
         }

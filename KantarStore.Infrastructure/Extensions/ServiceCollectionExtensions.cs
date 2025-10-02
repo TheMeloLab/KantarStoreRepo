@@ -1,4 +1,6 @@
-﻿using KantarStore.Infrastructure.Persistance;
+﻿using KantarStore.Domain.Repositories;
+using KantarStore.Infrastructure.Persistance;
+using KantarStore.Infrastructure.Repositories;
 using KantarStore.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,8 @@ namespace KantarStore.Infrastructure.Extensions
             var con = configuration.GetConnectionString("KantarStoreDb");
             services.AddDbContext<KantarStoreDBContext>(options => options.UseSqlServer(con));
             services.AddScoped<IProductSeeder, ProductSeeder>();
+            services.AddScoped<IVoucherSeeder, VoucherSeeder>();
+            services.AddScoped<IProductsRepository, ProductsRepository>();
         }
     }
 }
