@@ -22,7 +22,10 @@ namespace KantarStore.Infrastructure.Extensions
             services.AddDbContext<KantarStoreDBContext>(options => options.UseSqlServer(con));
             services.AddScoped<IProductSeeder, ProductSeeder>();
             services.AddScoped<IVoucherSeeder, VoucherSeeder>();
+            services.AddScoped<IUserSeeder, UserSeeder>();
+            services.AddScoped<IBasketSeeder, BasketSeeder>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
         }
     }
 }

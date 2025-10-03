@@ -1,4 +1,6 @@
-﻿using KantarStore.Application.Products;
+﻿using KantarStore.Application.Dtos;
+using KantarStore.Application.Services.Baskets;
+using KantarStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,30 +12,37 @@ namespace KantarStore.Api.Controllers
     public class BasketController(IBasketService basketService) : ControllerBase
     {
         [HttpGet("History/{userid}")]
-        public IEnumerable<string> GetUserBasketHistory(Guid userid)
+        public async Task<IActionResult> GetUserBasketHistory(Guid userid)
         {
-            return new string[] { "value1", "value2" };
+            var coll = await basketService.GetUserBasketHistory(userid);
+            return Ok(coll);
         }
         
         [HttpGet("{userid}")]
-        public string GetUserBasket(Guid userid)
+        public async Task<IActionResult> GetUserBasket(Guid userid)
         {
-            return "value";
+            var coll = await basketService.GetUserBasket(userid);
+            return Ok(coll);
         }
 
         [HttpPost("AddToBasket")]
-        public void AddToBasket([FromBody] string value)
+        public async Task<IActionResult> AddToBasket([FromBody] BasketItemDto value)
         {
+            var basket = await basketService.AddToBasket(value.UserId,value.ProductId,value.Quantity);
+            return Ok(basket);
         }
 
         [HttpPost("RemoveFromBasket")]
-        public void RemoveFromBasket([FromBody] string value)
+        public async Task<IActionResult> RemoveFromBasket([FromBody] BasketItemDto value)
         {
+            var basket = await basketService.RemoveFromBasket(value.UserId, value.ProductId, value.Quantity);
+            return Ok(basket);
         }
 
         [HttpPost("Checkout")]
-        public void Checkout([FromBody] string value)
+        public void Checkout()
         {
+            throw new NotImplementedException();
         }
     }
 }

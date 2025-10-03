@@ -11,13 +11,16 @@ namespace KantarStore.Domain.Entities
     {
         protected BasketItem() { }
 
-        public BasketItem(Guid id, Guid productId, int quantity, decimal unitPrice)
+        public BasketItem(Guid id, Guid basketId, Product product, int quantity, decimal unitPrice)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("ID cannot be empty.", nameof(id));
 
-            if (productId == Guid.Empty)
-                throw new ArgumentException("Product ID cannot be empty.", nameof(productId));
+            if (basketId == Guid.Empty)
+                throw new ArgumentException("Basket ID cannot be empty.", nameof(id));
+
+            if (product == null)
+                throw new ArgumentException("Product cannot be null.", nameof(product));
 
             if (quantity <= 0)
                 throw new ArgumentException("Quantity must be positive.", nameof(quantity));
@@ -26,16 +29,18 @@ namespace KantarStore.Domain.Entities
                 throw new ArgumentException("Unit price cannot be negative.", nameof(unitPrice));
 
             Id = id;
-            ProductId = productId;
+            Product = product;
+            BasketId = basketId;
             Quantity = quantity;
-            UnitPrice = unitPrice;
+            Price = unitPrice;
         }
 
         [Key]
-        public Guid Id { get; private set; }
-        public Basket Basket { get; private set; }
-        public Guid ProductId { get; private set; }
-        public int Quantity { get; private set; }
-        public decimal UnitPrice { get; private set; }
+        public Guid Id { get; set; }
+        public Guid BasketId { get; set; }
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Discount { get; set; }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using KantarStore.Application.Products;
-using KantarStore.Domain.Repositories;
+using KantarStore.Application.Services.Baskets;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KantarStore.Application.Extensions
 {
@@ -14,6 +9,7 @@ namespace KantarStore.Application.Extensions
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<IBasketService, BasketService>();
             services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
         }
     }

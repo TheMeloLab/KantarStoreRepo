@@ -1,13 +1,14 @@
-﻿using KantarStore.Domain.Entities;
+﻿using KantarStore.Application.Dtos;
+using KantarStore.Domain.Entities;
 
-namespace KantarStore.Application.Baskets
+namespace KantarStore.Application.Services.Baskets
 {
     public interface IBasketService
     {
         Task<IEnumerable<Basket>> GetUserBasketHistory(Guid userId);
         Task<Basket> GetUserBasket(Guid userId);
-        Task<Basket> AddToBasket(Guid id);
-        Task<Basket> RemoveFromBasket(Guid id);
-        Task<Basket> Checkout(Guid id);
+        Task<Basket> AddToBasket(Guid userId, Guid productId, int quantity);
+        Task<Basket> RemoveFromBasket(Guid userId, Guid productId, int quantity);
+        Task<bool> Checkout(Guid userId);
     }
 }

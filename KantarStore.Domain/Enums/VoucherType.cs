@@ -10,9 +10,12 @@ namespace KantarStore.Domain.Enums
     {
         public enum VoucherType
         {
-            PercentageDiscountOnProduct,
-            MultiBuyPercentageDifferentProduct,
-            MultiBuyOfferProduct
+            PercentageDiscountOnDifferentProduct = 1,
+            PercentageDiscountOnSameProduct = 2,
+            MultiBuyPercentageDiscountDifferentProduct = 3,
+            MultiBuyPercentageDiscountSameProduct = 4,
+            MultiBuyOfferSameProduct = 5,
+            MultiBuyOfferDiffentProduct = 6
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KantarStore.Infrastructure.Migrations
 {
     [DbContext(typeof(KantarStoreDBContext))]
-    [Migration("20251001142202_Init")]
+    [Migration("20251003182855_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -31,10 +31,18 @@ namespace KantarStore.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("BasketTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Baskets");
                 });
@@ -48,18 +56,23 @@ namespace KantarStore.Infrastructure.Migrations
                     b.Property<Guid>("BasketId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BasketId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("BasketItems");
                 });
@@ -92,6 +105,35 @@ namespace KantarStore.Infrastructure.Migrations
                     b.HasIndex("VoucherId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("KantarStore.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("KantarStore.Domain.Entities.Voucher", b =>
@@ -142,15 +184,32 @@ namespace KantarStore.Infrastructure.Migrations
                     b.ToTable("Vouchers");
                 });
 
+            modelBuilder.Entity("KantarStore.Domain.Entities.Basket", b =>
+                {
+                    b.HasOne("KantarStore.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("KantarStore.Domain.Entities.BasketItem", b =>
                 {
-                    b.HasOne("KantarStore.Domain.Entities.Basket", "Basket")
-                        .WithMany()
+                    b.HasOne("KantarStore.Domain.Entities.Basket", null)
+                        .WithMany("BasketItems")
                         .HasForeignKey("BasketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Basket");
+                    b.HasOne("KantarStore.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("KantarStore.Domain.Entities.Product", b =>
@@ -160,6 +219,11 @@ namespace KantarStore.Infrastructure.Migrations
                         .HasForeignKey("VoucherId");
 
                     b.Navigation("Voucher");
+                });
+
+            modelBuilder.Entity("KantarStore.Domain.Entities.Basket", b =>
+                {
+                    b.Navigation("BasketItems");
                 });
 #pragma warning restore 612, 618
         }
