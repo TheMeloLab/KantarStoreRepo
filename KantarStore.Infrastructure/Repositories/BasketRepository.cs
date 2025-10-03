@@ -2,30 +2,23 @@
 using KantarStore.Domain.Repositories;
 using KantarStore.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KantarStore.Infrastructure.Repositories
 {
     internal class BasketRepository(KantarStoreDBContext dBContext) 
         : IBasketRepository
     {
-        public Task<Basket> AddToBasket(Guid productId)
-        {
-            throw new NotImplementedException();
-        }
-        public Task<bool> RemoveFromBasket(Guid productId)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<bool> Checkout(Guid userDd)
+        public async Task<bool> Checkout(Guid userId)
         {
-            throw new NotImplementedException();
+            var basket = await dBContext.Baskets
+            .Include(b => b.BasketItems)
+            .FirstOrDefaultAsync(b => b.User.Id == userId && b.Status == (int)Basket.BasketStatus.Open);
+
+            basket.Status = 2;
+
+            var res = await dBContext.SaveChangesAsync();
+            return res != -1;
         }
 
         public async Task<Basket> GetUserBasket(Guid userId)

@@ -11,8 +11,6 @@ namespace KantarStore.Domain.Repositories
     {
         Task<IEnumerable<Basket>> GetUserBasketHistory(Guid userId);
         Task<Basket> GetUserBasket(Guid userId);
-        Task<Basket> AddToBasket(Guid id);
-        Task<bool> RemoveFromBasket(Guid id);
         Task<bool> Checkout(Guid id);
         Task<bool> UpdateAsync(Basket basket);
     }

@@ -2,6 +2,7 @@
 using KantarStore.Application.Services.Baskets;
 using KantarStore.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,7 +10,7 @@ namespace KantarStore.Api.Controllers
 {
     [Route("KantarStore/api/[controller]")]
     [ApiController]
-    public class BasketController(IBasketService basketService) : ControllerBase
+    public class BasketsController(IBasketService basketService) : ControllerBase
     {
         [HttpGet("History/{userid}")]
         public async Task<IActionResult> GetUserBasketHistory(Guid userid)
@@ -40,9 +41,10 @@ namespace KantarStore.Api.Controllers
         }
 
         [HttpPost("Checkout")]
-        public void Checkout()
+        public async Task<IActionResult> Checkout([FromBody] Guid userId)
         {
-            throw new NotImplementedException();
+           var val = await basketService.Checkout(userId);
+           return Ok(val);
         }
     }
 }
