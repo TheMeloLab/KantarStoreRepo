@@ -53,6 +53,10 @@ namespace KantarStore.Domain.Entities
 
             foreach (var basketItem in BasketItems)
             {
+                bool usedVoucher = false;
+                basketItem.Price = 0;
+                basketItem.Discount = 0;
+
                 if (basketItem.Product.Voucher != null)
                 {
                     decimal percentage = 0;
@@ -69,6 +73,7 @@ namespace KantarStore.Domain.Entities
                             unitPrice = basketItem.Product.Price - discount;
                             basketItem.Price = unitPrice * basketItem.Quantity;
                             basketItem.Discount = discount * basketItem.Quantity;
+                            usedVoucher = true;
                             break;
 
                         case 3: // MultiBuyPercentageDiscountDifferentProduct
@@ -78,10 +83,9 @@ namespace KantarStore.Domain.Entities
                             break;
                     }
                 }
-                
-                if(!CheckVouchersForCurrentProduct(basketItem))
+
+                if (!CheckVouchersForCurrentProduct(basketItem) && !usedVoucher)
                     basketItem.Price = basketItem.Product.Price * basketItem.Quantity;
-                
             }
             BasketTotal = BasketItems.Sum(p => p.Price);
         }
@@ -107,9 +111,6 @@ namespace KantarStore.Domain.Entities
                 unitPrice = basketItem.Product.Price - discount;
 
                 int? numberOfDiscounts = originBasketItem.Quantity / originBasketItem.Product?.Voucher?.MultiBuyPercentageDiscountDifferentProduct_Quantity;
-
-                basketItem.Price = 0;
-                basketItem.Discount = 0;
 
                 for (int i = 0; i < numberOfDiscounts; i++)
                 {
