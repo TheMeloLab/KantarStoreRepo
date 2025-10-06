@@ -24,7 +24,10 @@ namespace KantarStore.Infrastructure.Repositories
         public async Task<Basket> GetUserBasket(Guid userId)
         {
             var basket = await dBContext.Baskets
+             .Include (b => b.User)
              .Include(b => b.BasketItems)
+                .ThenInclude(bi => bi.Product)            
+                    .ThenInclude(p => p.Voucher)
              .FirstOrDefaultAsync(b => b.User.Id == userId && b.Status == (int)Basket.BasketStatus.Open);
 
             if(basket == null)

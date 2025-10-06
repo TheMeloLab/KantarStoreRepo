@@ -8,7 +8,7 @@ namespace KantarStore.Application.Services.Baskets
         Task<IEnumerable<Basket>> GetUserBasketHistory(Guid userId);
         Task<Basket> GetUserBasket(Guid userId);
         Task<Basket> AddToBasket(Guid userId, Guid productId, int quantity);
-        Task<Basket> RemoveFromBasket(Guid userId, Guid productId, int quantity);
+        Task<Basket> RemoveFromBasket(Guid userId, Guid productId);
         Task<bool> Checkout(Guid userId);
     }
 }

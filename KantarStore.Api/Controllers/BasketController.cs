@@ -27,23 +27,23 @@ namespace KantarStore.Api.Controllers
         }
 
         [HttpPost("AddToBasket")]
-        public async Task<IActionResult> AddToBasket([FromBody] BasketItemDto value)
+        public async Task<IActionResult> AddToBasket([FromBody] AddBasketItemDto value)
         {
             var basket = await basketService.AddToBasket(value.UserId,value.ProductId,value.Quantity);
             return Ok(basket);
         }
 
         [HttpPost("RemoveFromBasket")]
-        public async Task<IActionResult> RemoveFromBasket([FromBody] BasketItemDto value)
+        public async Task<IActionResult> RemoveFromBasket([FromBody] RemoveBasketItemDto value)
         {
-            var basket = await basketService.RemoveFromBasket(value.UserId, value.ProductId, value.Quantity);
+            var basket = await basketService.RemoveFromBasket(value.UserId, value.ProductId);
             return Ok(basket);
         }
 
         [HttpPost("Checkout")]
-        public async Task<IActionResult> Checkout([FromBody] Guid userId)
+        public async Task<IActionResult> Checkout([FromBody] CheckoutDto value)
         {
-           var val = await basketService.Checkout(userId);
+           var val = await basketService.Checkout(value.UserId);
            return Ok(val);
         }
     }

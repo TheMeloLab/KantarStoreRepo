@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KantarStore.IntegrationTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KantarStore.FuncionalTests", "KantarStore.FuncionalTests\KantarStore.FuncionalTests.csproj", "{749466E9-A6A5-4BC5-B8C0-C6354372A532}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "kantarstore.app", "KantarStore.App\kantarstore.app.esproj", "{592D85F3-F128-4407-BB56-508E23FA6864}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,12 +57,6 @@ Global
 		{749466E9-A6A5-4BC5-B8C0-C6354372A532}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{749466E9-A6A5-4BC5-B8C0-C6354372A532}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{749466E9-A6A5-4BC5-B8C0-C6354372A532}.Release|Any CPU.Build.0 = Release|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Release|Any CPU.Build.0 = Release|Any CPU
-		{592D85F3-F128-4407-BB56-508E23FA6864}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +70,6 @@ Global
 		{4DBDC5EC-C235-4907-992A-9D6631B7A258} = {9A580786-416E-4C54-BD8B-001E0B4E5B4A}
 		{573F1D13-6E40-4357-B340-72FD5DFC030C} = {9A580786-416E-4C54-BD8B-001E0B4E5B4A}
 		{749466E9-A6A5-4BC5-B8C0-C6354372A532} = {9A580786-416E-4C54-BD8B-001E0B4E5B4A}
-		{592D85F3-F128-4407-BB56-508E23FA6864} = {74F80A3F-7290-42E3-AD4C-5CCAD497BFA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44C2A714-0FE2-4984-80AE-FF8430ADD6E8}

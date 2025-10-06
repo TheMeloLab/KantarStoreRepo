@@ -58,7 +58,7 @@ namespace KantarStore.Application.Services.Baskets
             //return basketHistoryDtos;
             return basketHistory;
         }
-        public async Task<Basket> RemoveFromBasket(Guid userId, Guid productId, int quantity)
+        public async Task<Basket> RemoveFromBasket(Guid userId, Guid productId)
         {
             // 1. Get current basket for user
             var basket = await basketRepository.GetUserBasket(userId);
@@ -67,7 +67,7 @@ namespace KantarStore.Application.Services.Baskets
             var prod = await productRepository.GetByIdAsync(productId);
 
             // 3. Add or update the item
-            basket.RemoveItems(prod, quantity);
+            basket.RemoveItems(prod);
 
             // 4. Recalculate subtotal, discount, tax, total
             basket.RecalculateTotals();
